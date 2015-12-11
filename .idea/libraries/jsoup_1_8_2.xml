@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="jsoup-1.8.2">
+    <CLASSES>
+      <root url="jar://C:/Program Files/Java/jsoup/jsoup-1.8.2.jar!/" />
+      <root url="jar://D:/Program Files/Java/jsoup/jsoup-1.8.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://C:/Program Files/Java/jsoup/jsoup-1.8.2-sources.jar!/" />
+      <root url="jar://D:/Program Files/Java/jsoup/jsoup-1.8.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

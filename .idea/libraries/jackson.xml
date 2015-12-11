@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="jackson">
+    <CLASSES>
+      <root url="jar://D:/Program Files/Java/json/jackson/jackson-annotations-2.4.3.jar!/" />
+      <root url="jar://D:/Program Files/Java/json/jackson/jackson-core-2.4.3.jar!/" />
+      <root url="jar://D:/Program Files/Java/json/jackson/jackson-databind-2.4.3.jar!/" />
+      <root url="jar://C:/Program Files/Java/json/jackson/jackson-annotations-2.4.3.jar!/" />
+      <root url="jar://C:/Program Files/Java/json/jackson/jackson-core-2.4.3.jar!/" />
+      <root url="jar://C:/Program Files/Java/json/jackson/jackson-databind-2.4.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
