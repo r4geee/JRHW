@@ -7,10 +7,9 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 public class Cache<K, V> {
-    private Map<K, V> cache = new WeakHashMap<>();   //TODO add your code here
+    private Map<K, V> cache = new WeakHashMap<>();
 
     public V getByKey(K key, Class<V> clazz) throws Exception {
-        //TODO add your code here
         V value = cache.get(key);
         if (value != null) {
             return value;
@@ -24,7 +23,6 @@ public class Cache<K, V> {
     }
 
     public boolean put(V obj) {
-        //TODO add your code here
         try {
             Method method = obj.getClass().getMethod("getKey", null);
             method.setAccessible(true);

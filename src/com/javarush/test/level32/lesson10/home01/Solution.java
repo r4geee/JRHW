@@ -24,7 +24,6 @@ public class Solution {
     public static Thread CLIENT_THREAD = new Thread(new Runnable() {
         @Override
         public void run() {
-            //TODO add your code here - добавьте код тут
             try
             {
                 DoubleString doubleString = (DoubleString) registry.lookup(UNIC_BINDING_NAME);
