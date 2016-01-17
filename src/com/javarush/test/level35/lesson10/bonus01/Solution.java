@@ -1,10 +1,13 @@
 package com.javarush.test.level35.lesson10.bonus01;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,8 +30,15 @@ public class Solution {
         Set<? extends Animal> allAnimals = getAllAnimals("D:\\data");
         System.out.println(allAnimals);
     }
-
     public static Set<? extends Animal> getAllAnimals(String pathToAnimals) {
+        Set<Animal> animals = new HashSet<>();
+        if (!pathToAnimals.endsWith("\\")) {
+            pathToAnimals += "\\";
+        }
+
+        return animals;
+    }
+    public static Set<? extends Animal> getAllAnimals1(String pathToAnimals) {
         Set<Animal> animals = new HashSet<>();
         final String finalPathToAnimals;
         if (!pathToAnimals.endsWith("\\")) {
@@ -97,5 +107,37 @@ public class Solution {
             }
         }
         return animals;
+    }
+
+    public static Set<? extends Animal> getAllAnimals2(String pathToAnimals) {
+        if (!pathToAnimals.endsWith("/")) {
+            pathToAnimals += "/";
+        }
+
+        List<File> fileList = new ArrayList<>();
+        for (File file : Paths.get(pathToAnimals).toFile().listFiles()) {
+            if (!file.isDirectory()) {
+                fileList.add(file);
+            }
+        }
+
+        try {
+
+            URL url = Paths.get(pathToAnimals).toFile().toURL();
+            URL[] urls = new URL[]{url};
+
+            File newClassesDir = Paths.get(pathToAnimals + ".com.MyClasses").toFile();
+            if (!newClassesDir.exists()) {
+                newClassesDir.mkdirs();
+            }
+            ClassLoader classLoader = new URLClassLoader(urls);
+            Class cl = classLoader.loadClass(".com.MyClasses");
+        }
+        catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
+        Set<? extends Animal> set = new HashSet<>();
+        return set;
     }
 }
