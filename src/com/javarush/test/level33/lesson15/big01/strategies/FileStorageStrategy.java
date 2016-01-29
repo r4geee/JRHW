@@ -18,8 +18,8 @@ public class FileStorageStrategy implements StorageStrategy {
     }
 
     public FileStorageStrategy() {
-        for (FileBucket fileBucket : table) {
-            fileBucket = new FileBucket();
+        for (int i = 0; i < table.length; i++) {
+            table[i] = new FileBucket();
         }
     }
 
@@ -41,10 +41,13 @@ public class FileStorageStrategy implements StorageStrategy {
 
     void resize(int newCapacity) {
         FileBucket[] newTable = new FileBucket[newCapacity];
-        for (FileBucket fileBucket : newTable) {
-            fileBucket = new FileBucket();
+        for (int i = 0; i < newTable.length; i++) {
+            newTable[i] = new FileBucket();
         }
         transfer(newTable);
+        for (FileBucket fileBucket : table) {
+            fileBucket.remove();
+        }
         table = newTable;
     }
 
@@ -64,23 +67,10 @@ public class FileStorageStrategy implements StorageStrategy {
                 newTable[i].putEntry(e);
                 e = next;
             }
-            fileBucket.remove();
         }
     }
 
     void addEntry(int hash, Long key, String value, int bucketIndex) {
-/*        long maxSizeFound = 0;
-        for (FileBucket fileBucket : table) {
-            if (fileBucket != null && fileBucket.getFileSize() > maxSizeFound) {
-                maxSizeFound = fileBucket.getFileSize();
-            }
-        }
-        if ((maxSizeFound > bucketSizeLimit)) {
-            resize(2 * table.length);
-            hash = (key != null) ? hash(key) : 0;
-            bucketIndex = indexFor(hash, table.length);
-        }
-        createEntry(hash, key, value, bucketIndex);*/
         createEntry(hash, key, value, bucketIndex);
         if (table[bucketIndex].getFileSize() > bucketSizeLimit) {
             resize(2 * table.length);
@@ -115,9 +105,6 @@ public class FileStorageStrategy implements StorageStrategy {
         if (key == null) return;
         int hash = hash(key);
         int i = indexFor(hash, table.length);
-/*        if (table[i] == null) {
-            table[i] = new FileBucket();
-        }*/
         for (Entry e = table[i].getEntry(); e != null; e = e.next) {
             Long k;
             if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
