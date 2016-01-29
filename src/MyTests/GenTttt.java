@@ -7,26 +7,15 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Alexei on 13.12.2015.
  */
 public class GenTttt {
     public static void main(String[] args) throws ClassNotFoundException {
-        //String folderPath = "out\\production\\JavaRushHomeWork\\com\\javarush\\test\\level35\\lesson10\\bonus01\\data";
-        ClassLoader classLoader = GenTttt.class.getClassLoader();
-        Class <?> clazz = classLoader.loadClass("MyTests.Person");
-        Constructor[] allConstructors = clazz.getDeclaredConstructors();
-        for (Constructor ctor : allConstructors) {
-            Class<?>[] pType = ctor.getParameterTypes();
-            System.out.println("pType size = " + pType.length);
-            System.out.println(ctor.getParameterCount());
-            if(Modifier.isPublic(ctor.getModifiers()))
-                System.out.println("isPublic");
-            if(Modifier.isPrivate(ctor.getModifiers()))
-                System.out.println("isPrivate");
-            if(Modifier.isProtected(ctor.getModifiers()))
-                System.out.println("isProtected");
-        }
+        Path currentDir = Paths.get(".");
+        System.out.println(currentDir.toAbsolutePath());
     }
 }

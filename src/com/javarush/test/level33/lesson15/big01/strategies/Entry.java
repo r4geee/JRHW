@@ -1,9 +1,11 @@
 package com.javarush.test.level33.lesson15.big01.strategies;
 
+import java.io.Serializable;
+
 /**
  * Created by Alexei on 17.01.2016.
  */
-public class Entry {
+public class Entry implements Serializable {
 
     int hash;
     Long key;
