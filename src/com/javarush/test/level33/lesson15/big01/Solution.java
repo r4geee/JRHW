@@ -18,6 +18,7 @@ public class Solution {
         testStrategy(new OurHashBiMapStorageStrategy(), 10000);
         testStrategy(new HashBiMapStorageStrategy(), 10000);
         testStrategy(new DualHashBidiMapStorageStrategy(), 10000);
+        testStrategy(new SqlLiteDBStorageStrategy(), 10);
     }
 
     public static Set<Long> getIds(Shortener shortener, Set<String> strings) {

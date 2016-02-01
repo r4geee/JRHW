@@ -39,5 +39,6 @@
     <orderEntry type="library" name="junit:junit:4.11" level="project" />
     <orderEntry type="library" name="com.bluecatcode.guava:guava-18.0-extended:1.0.4" level="project" />
     <orderEntry type="library" name="com.danidemi.jlubricant:jlubricant-apache-commons-collections:0.0.4" level="project" />
+    <orderEntry type="library" name="org.xerial:sqlite-jdbc:3.8.11.2" level="project" />
   </component>
 </module>
