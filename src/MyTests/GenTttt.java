@@ -3,6 +3,7 @@ package MyTests;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.math.BigDecimal;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,7 +16,10 @@ import java.util.Map;
  */
 public class GenTttt {
     public static void main(String[] args) throws ClassNotFoundException {
-        Path currentDir = Paths.get(".");
-        System.out.println(currentDir.toAbsolutePath());
+        BigDecimal a = new BigDecimal("2762161261262161261");
+        BigDecimal c = new BigDecimal("5.9213");
+        BigDecimal b = new BigDecimal(13421412);
+        //System.out.println(a.divide(b));
+        System.out.println(a.divide(c, 10, BigDecimal.ROUND_HALF_EVEN));
     }
 }
