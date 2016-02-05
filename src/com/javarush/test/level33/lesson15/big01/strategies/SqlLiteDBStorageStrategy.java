@@ -89,7 +89,7 @@ public class SqlLiteDBStorageStrategy implements StorageStrategy {
     @Override
     public void put(Long key, String value) {
         try {
-            statmt.execute("INSERT INTO '" + TABLE_NAME + "' ('id', 'value') VALUES ('" + key + "','" + value + "'); ");
+            statmt.execute("INSERT OR REPLACE INTO '" + TABLE_NAME + "' ('id', 'value') VALUES ('" + key + "','" + value + "'); ");
         }
         catch (SQLException e) {
             e.printStackTrace();

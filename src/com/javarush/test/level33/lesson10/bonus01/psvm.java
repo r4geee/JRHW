@@ -1,8 +1,12 @@
 package com.javarush.test.level33.lesson10.bonus01;
 
+import org.xml.sax.SAXException;
+
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 /**
  * Created by Test on 11.08.2015.
@@ -20,7 +24,19 @@ public class psvm {
     }
 
     public static void main(String[] args) throws JAXBException {
-        String result = Solution.toXmlWithComment(new AnExample(), "needCDATA", "it's a comment - <needCDATA>");
+        String result = null;
+        try {
+            result = Solution.toXmlWithComment(new AnExample(), "needCDATA", "it's a comment - <needCDATA>");
+        }
+        catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (SAXException e) {
+            e.printStackTrace();
+        }
         System.out.println(result);
     }
 

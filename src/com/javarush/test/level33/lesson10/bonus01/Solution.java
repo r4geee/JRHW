@@ -3,9 +3,26 @@ package com.javarush.test.level33.lesson10.bonus01;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.w3c.dom.Comment;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
+
 
 /* Комментарий внутри xml
 Реализовать метод toXmlWithComment, который должен возвращать строку - xml представление объекта obj.
@@ -27,7 +44,59 @@ import java.util.regex.Pattern;
 </first>
 */
 public class Solution {
-    public static String toXmlWithComment(Object obj, String tagName, final String comment) throws JAXBException {
+    public static String toXmlWithComment(Object obj, String tagName, final String comment) throws JAXBException, ParserConfigurationException, IOException, SAXException {
+        StringWriter writer = new StringWriter();
+        JAXBContext context = JAXBContext.newInstance(obj.getClass());
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+        marshaller.marshal(obj, writer);
+        String result = writer.toString();
+
+        String fake = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<rss version=\"2.0\">\n" +
+                "\t<channel>\n" +
+                "\t\t<title>Java Tutorials and Examples</title>\n" +
+                "\t\t<item>\n" +
+                "\t\t\t<title><![CDATA[Java Tutorials]]></title>\n" +
+                "\t\t\t<link>http://www.javacodegeeks.com/</link>\n" +
+                "\t\t</item>\n" +
+                "\t</channel>\n" +
+                "</rss>";
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setValidating(false);
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        Document doc = db.parse(new ByteArrayInputStream(result.getBytes()));
+        try {
+            prettyPrint(doc);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        Element element = doc.getDocumentElement();
+        Comment com = doc.createComment(comment);
+        element.getParentNode().insertBefore(com, element);
+
+        try {
+            prettyPrint(doc);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+
+
+    }
+    public static final void prettyPrint(Document xml) throws Exception {
+        Transformer tf = TransformerFactory.newInstance().newTransformer();
+        tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        tf.setOutputProperty(OutputKeys.INDENT, "yes");
+        Writer out = new StringWriter();
+        tf.transform(new DOMSource(xml), new StreamResult(out));
+        System.out.println(out.toString());
+    }
+
+    /*public static String toXmlWithComment(Object obj, String tagName, final String comment) throws JAXBException {
         StringWriter writer = new StringWriter();
         JAXBContext context = JAXBContext.newInstance(obj.getClass());
         Marshaller marshaller = context.createMarshaller();
@@ -73,7 +142,7 @@ public class Solution {
             }
         }
         return result;
-    }
+    }*/
 
 
 }
