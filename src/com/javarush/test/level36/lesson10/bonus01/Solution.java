@@ -1,5 +1,11 @@
 package com.javarush.test.level36.lesson10.bonus01;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +26,8 @@ public class Solution {
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
-        Solution solution = new Solution("C:\\JavaRushHomeWork\\src\\com\\javarush\\test\\level36\\lesson10\\bonus01\\data\\second");
+        //Solution solution = new Solution("C:\\JavaRushHomeWork\\src\\com\\javarush\\test\\level36\\lesson10\\bonus01\\data\\second");
+        Solution solution = new Solution("D:\\Documents\\Dropbox\\Workspace\\IDEA\\JavaRushHomeWork\\out\\production\\JavaRushHomeWork\\com\\javarush\\test\\level36\\lesson10\\bonus01\\data\\second");
         solution.scanFileSystem();
         System.out.println(solution.getHiddenClassObjectByKey("hiddenclassimplse"));
         System.out.println(solution.getHiddenClassObjectByKey("hiddenclassimplf"));
@@ -28,9 +35,77 @@ public class Solution {
     }
 
     public void scanFileSystem() throws ClassNotFoundException {
+        final String finalPackageName;
+        if (!packageName.endsWith("/")) {
+            finalPackageName =  packageName +  "/";
+        } else {
+            finalPackageName = packageName;
+        }
+
+        List<String> fileNames = new ArrayList<>();
+        for (File file : new File(finalPackageName).listFiles()) {
+            if (file.isFile() && file.getName().endsWith(".class"))
+                fileNames.add(file.getName());
+        }
+
+        ClassLoader classLoader = new ClassLoader() {
+            @Override
+            public Class<?> findClass(String className) throws ClassNotFoundException
+            {
+                try
+                {
+                    byte b[] = readBytes(finalPackageName + className + ".class");
+                    return defineClass(null, b, 0, b.length);
+                }
+                catch (FileNotFoundException ex)
+                {
+                    return super.findClass(className);
+                }
+                catch (IOException ex)
+                {
+                    return super.findClass(className);
+                }
+            }
+        };
+
+        for (String fileName : fileNames) {
+            String className = fileName.split("\\.class")[0];
+            try {
+                hiddenClasses.add(classLoader.loadClass(className));
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+    public  byte[] readBytes(String path) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(path);
+        byte[] bytes = new byte[fileInputStream.available()];
+        fileInputStream.read(bytes);
+        return bytes;
     }
 
     public HiddenClass getHiddenClassObjectByKey(String key) {
+        for (Class clazz : hiddenClasses) {
+            if (HiddenClass.class.isAssignableFrom(clazz) && clazz.getSimpleName().toLowerCase().startsWith(key.toLowerCase())){
+                try {
+                    Constructor<HiddenClass> constructor = clazz.getDeclaredConstructor();
+                    constructor.setAccessible(true);
+                    return constructor.newInstance();
+                }
+                catch (InstantiationException e) {
+                }
+                catch (IllegalAccessException e) {
+
+                }
+                catch (NoSuchMethodException e) {
+
+                }
+                catch (InvocationTargetException e) {
+
+                }
+            }
+        }
         return null;
     }
 }

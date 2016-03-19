@@ -20,14 +20,32 @@ public class Solution {
     }
 
     public static Class getExpectedClass() {
-        List<String> classNames = new ArrayList<>();
+        String[] locations = getLocations();
+        for (String location : locations) {
+            if (location.endsWith(".jar")){
+                try {
+                    JarInputStream jarInputStream = new JarInputStream(Files.newInputStream(Paths.get(location)));
+                    JarEntry jarEntry = jarInputStream.getNextJarEntry();
+                    while (jarEntry != null) {
+                        System.out.println(jarEntry.getName());
+                        jarEntry = jarInputStream.getNextJarEntry();
+                    }
+                } catch (IOException e) {
+                }
+            }
+        }
+        return null;
+/*        List<String> classNames = new ArrayList<>();
         try {
             JarInputStream jarInputStream = new JarInputStream(Files.newInputStream(Paths.get("C:\\Program Files\\Java\\jdk1.8.0_25\\jre\\lib\\rt.jar")));
             JarEntry jarEntry = jarInputStream.getNextJarEntry();
             while (jarEntry != null) {
-                if (jarEntry.getName().matches("java/util/[^/]*\\.class")) {
+*//*                if (jarEntry.getName().matches("java/util/[^/]*\\.class")) {
                     classNames.add(jarEntry.getName().replace("java/util/", "").replace(".class", ""));
-                }
+                }*//*
+                byte[] bytes = new byte[jarInputStream.available()];
+                jarInputStream.read(bytes);
+
                 jarEntry = jarInputStream.getNextJarEntry();
             }
         } catch (IOException e) {
@@ -46,6 +64,11 @@ public class Solution {
         for(Class<?> c : classes) {
             System.out.println(c);
         }
-        return null;
+        return null;*/
+    }
+
+    public static String[] getLocations() {
+        String classpath = System.getProperty("java.class.path");
+        return classpath.split(System.getProperty("path.separator"));
     }
 }
