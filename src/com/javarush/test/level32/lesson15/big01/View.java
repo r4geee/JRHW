@@ -33,55 +33,26 @@ public class View extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-/*        switch (e.getActionCommand()) {
+       switch (e.getActionCommand()) {
             case "Новый":
-                createNewDocument();
+                controller.createNewDocument();
                 break;
             case "Открыть":
-                openDocument();
+                controller.openDocument();
                 break;
             case "Сохранить":
-                saveDocument();
+                controller.saveDocument();
                 break;
             case "Сохранить как...":
-                saveDocumentAs();
+                controller.saveDocumentAs();
                 break;
             case "Выход":
-                exit();
+                controller.exit();
                 break;
             case "О программе":
                 showAbout();
                 break;
-        }*/
-        String command = e.getActionCommand();
-        if (command.equals("Новый")) {
-            createNewDocument();
-        } else if (command.equals("Новый")) {
-            createNewDocument();
-        } else if (command.equals("Новый")) {
-            createNewDocument();
-        } else if (command.equals("Новый")) {
-            createNewDocument();
-        } else if (command.equals("Новый")) {
-            createNewDocument();
-        } else if (command.equals("Новый")) {
-            createNewDocument();
         }
-    }
-
-    public void saveDocumentAs() {
-
-    }
-
-    public void saveDocument() {
-    }
-
-    public void openDocument() {
-
-    }
-
-    public void createNewDocument() {
-
     }
 
     public void init() {
@@ -180,6 +151,6 @@ public class View extends JFrame implements ActionListener {
     }
 
     public void showAbout() {
-        JOptionPane.showMessageDialog(getContentPane(), "About", "Created with gore popolam", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(getContentPane(), "About ultimate content", "Created with gore popolam", JOptionPane.INFORMATION_MESSAGE);
     }
 }

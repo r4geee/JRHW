@@ -19,15 +19,15 @@ public class MenuHelper {
         return menuItem;
     }
 
-    public static JMenuItem addMenuItem(JMenu parent, String text, Action action) {
-        JMenuItem menuItem = addMenuItem(parent, action);
-        menuItem.setText(text);
-        return menuItem;
-    }
-
     public static JMenuItem addMenuItem(JMenu parent, Action action) {
         JMenuItem menuItem = new JMenuItem(action);
         parent.add(menuItem);
+        return menuItem;
+    }
+
+    public static JMenuItem addMenuItem(JMenu parent, String text, Action action) {
+        JMenuItem menuItem = addMenuItem(parent, action);
+        menuItem.setText(text);
         return menuItem;
     }
 

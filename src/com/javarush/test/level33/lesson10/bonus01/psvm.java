@@ -15,7 +15,8 @@ public class psvm {
     @XmlType(name = "anExample")
     @XmlRootElement
     public static class AnExample {
-        public String[] needCDATA = new String[]{"need CDATA because of < and >", ""};
+        //public String[] needCDATA = new String[]{"need CDATA because of < and >", ""};
+        public String[] needCDATA = new String[]{"need CDATA because of < and >", "kekke", "kalasdsadsa"};
 
         public String lolka = "<ho & ' \" hoho>";
         public String escheRaz = "<needCDATA>";
@@ -24,19 +25,7 @@ public class psvm {
     }
 
     public static void main(String[] args) throws JAXBException {
-        String result = null;
-        try {
-            result = Solution.toXmlWithComment(new AnExample(), "needCDATA", "it's a comment - <needCDATA>");
-        }
-        catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        catch (SAXException e) {
-            e.printStackTrace();
-        }
+        String result = result = Solution.toXmlWithComment(new AnExample(), "needCDATA", "it's a comment - <needCDATA>");;
         System.out.println(result);
     }
 

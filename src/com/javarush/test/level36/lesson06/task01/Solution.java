@@ -1,9 +1,12 @@
 package com.javarush.test.level36.lesson06.task01;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
@@ -22,49 +25,49 @@ public class Solution {
     public static Class getExpectedClass() {
         String[] locations = getLocations();
         for (String location : locations) {
-            if (location.endsWith(".jar")){
+            if (location.endsWith(".jar")) {
                 try {
                     JarInputStream jarInputStream = new JarInputStream(Files.newInputStream(Paths.get(location)));
                     JarEntry jarEntry = jarInputStream.getNextJarEntry();
                     while (jarEntry != null) {
-                        System.out.println(jarEntry.getName());
+                        try {
+                            String className = jarEntry.getName().replaceAll("/", ".").replaceAll(".class", "");
+                            if (!className.startsWith("java.util")) {
+                                jarEntry = jarInputStream.getNextJarEntry();
+                                continue;
+                            }
+                            Class<?> clazz = Class.forName(className);
+                            int modifiers = clazz.getModifiers();
+                            if (List.class.isAssignableFrom(clazz) && Modifier.isPrivate(modifiers) && Modifier.isStatic(modifiers)) {
+ /*                               Constructor<?> constructor =  clazz.getDeclaredConstructor();
+                                constructor.setAccessible(true);
+                                System.out.println("1");
+                                List list = (List) constructor.newInstance(0, new Object());
+                                list.add(new Object());
+                                try {
+                                    System.out.println("1");
+                                    list.get(0);
+                                }
+                                catch (IndexOutOfBoundsException e) {
+                                    return clazz;
+                                }*/
+                                System.out.println(clazz.getName());
+                            }
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         jarEntry = jarInputStream.getNextJarEntry();
                     }
-                } catch (IOException e) {
+
+                }
+                catch (IOException e) {
+
                 }
             }
         }
-        return null;
-/*        List<String> classNames = new ArrayList<>();
-        try {
-            JarInputStream jarInputStream = new JarInputStream(Files.newInputStream(Paths.get("C:\\Program Files\\Java\\jdk1.8.0_25\\jre\\lib\\rt.jar")));
-            JarEntry jarEntry = jarInputStream.getNextJarEntry();
-            while (jarEntry != null) {
-*//*                if (jarEntry.getName().matches("java/util/[^/]*\\.class")) {
-                    classNames.add(jarEntry.getName().replace("java/util/", "").replace(".class", ""));
-                }*//*
-                byte[] bytes = new byte[jarInputStream.available()];
-                jarInputStream.read(bytes);
+        return Collections.EMPTY_LIST.getClass();
 
-                jarEntry = jarInputStream.getNextJarEntry();
-            }
-        } catch (IOException e) {
-        }
-
-        List<Class<?>> classes = new ArrayList<>();
-
-        for (String className : classNames) {
-            try {
-                classes.add(Class.forName("java.util." + className));
-            }
-            catch (ClassNotFoundException e) {
-
-            }
-        }
-        for(Class<?> c : classes) {
-            System.out.println(c);
-        }
-        return null;*/
     }
 
     public static String[] getLocations() {

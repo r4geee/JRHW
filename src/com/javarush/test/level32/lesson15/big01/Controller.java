@@ -1,12 +1,10 @@
 package com.javarush.test.level32.lesson15.big01;
 
+import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
 
 /**
  * Created by ame on 05-Feb-16.
@@ -30,7 +28,7 @@ public class Controller {
     }
 
     public void init() {
-
+        createNewDocument();
     }
 
     public void exit() {
@@ -77,5 +75,73 @@ public class Controller {
             ExceptionHandler.log(e);
         }
         return stringWriter.toString();
+    }
+
+    public void saveDocumentAs() {
+        view.selectHtmlTab();
+        JFileChooser jFileChooser = new JFileChooser();
+        jFileChooser.setFileFilter(new HTMLFileFilter());
+        int result = jFileChooser.showSaveDialog(view);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            currentFile = jFileChooser.getSelectedFile();
+            view.setTitle(currentFile.getName());
+            try {
+                FileWriter fileWriter = new FileWriter(currentFile);
+                new HTMLEditorKit().write(fileWriter, document, 0, document.getLength());
+                fileWriter.flush();
+                fileWriter.close();
+            }
+            catch (IOException e) {
+                ExceptionHandler.log(e);
+            }
+            catch (BadLocationException e) {
+                ExceptionHandler.log(e);
+            }
+        }
+    }
+
+    public void saveDocument() {
+        if (currentFile == null) {
+            saveDocumentAs();
+        } else {
+            try {
+                view.selectHtmlTab();
+                FileWriter fileWriter = new FileWriter(currentFile);
+                new HTMLEditorKit().write(fileWriter, document, 0, document.getLength());
+                fileWriter.flush();
+                fileWriter.close();
+            }
+            catch (IOException | BadLocationException e) {
+                ExceptionHandler.log(e);
+            }
+        }
+    }
+
+    public void openDocument() {
+        view.selectHtmlTab();
+        JFileChooser jFileChooser = new JFileChooser();
+        jFileChooser.setFileFilter(new HTMLFileFilter());
+        int result = jFileChooser.showOpenDialog(view);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            currentFile = jFileChooser.getSelectedFile();
+            resetDocument();
+            view.setTitle(currentFile.getName());
+            try {
+                FileReader fileReader = new FileReader(currentFile);
+                new HTMLEditorKit().read(fileReader, document, 0);
+                view.resetUndo();
+            }
+            catch (IOException | BadLocationException e) {
+                ExceptionHandler.log(e);
+            }
+        }
+    }
+
+    public void createNewDocument() {
+        view.selectHtmlTab();
+        resetDocument();
+        view.setTitle("HTML редактор");
+        view.resetUndo();
+        currentFile = null;
     }
 }
