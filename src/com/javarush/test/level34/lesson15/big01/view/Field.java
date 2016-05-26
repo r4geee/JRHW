@@ -1,6 +1,7 @@
 package com.javarush.test.level34.lesson15.big01.view;
 
 
+import com.javarush.test.level34.lesson15.big01.controller.EventListener;
 import com.javarush.test.level34.lesson15.big01.model.Box;
 import com.javarush.test.level34.lesson15.big01.model.Home;
 import com.javarush.test.level34.lesson15.big01.model.Player;
@@ -12,6 +13,7 @@ import java.awt.geom.Rectangle2D;
 
 public class Field extends JPanel {
 
+    EventListener eventListener;
     private View view;
 
     public Field(View view) {
@@ -27,5 +29,9 @@ public class Field extends JPanel {
         home.draw(g);
         Wall wall = new Wall(150, 100);
         wall.draw(g);
+    }
+
+    public void setEventListener(EventListener eventListener) {
+        this.eventListener = eventListener;
     }
 }
