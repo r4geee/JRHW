@@ -17,18 +17,13 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-/**
- * Created by Test on 5/11/2015.
- */
+
 public class aaaa {
 
     public static void main(String[] args) throws Exception {
-
-        String s = "s";
-        String s1 = null;
-        System.out.println(s.equals(s1));
+        String s = "(123) 456-7890";
+        String s1 = "(123)456-7890";
+        boolean res = s1.matches("\\([0-9]{3}\\)\\s?[0-9]{3}-[0-9]{4}");
+        System.out.println(res);
     }
-
-
-
 }

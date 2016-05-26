@@ -2,8 +2,6 @@ package com.javarush.test.level33.lesson05.home04;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.DeserializationConfig;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.cfg.MapperConfig;
@@ -13,8 +11,6 @@ import com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.Arrays;
 
 /* Конвертация из одного класса в другой используя JSON
 НЕОБХОДИМО: подключенные библиотеки Jackson Core, Bind и Annotation версии 2.4.3
