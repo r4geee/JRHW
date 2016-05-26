@@ -2,10 +2,8 @@ package com.javarush.test.level34.lesson15.big01.view;
 
 
 import com.javarush.test.level34.lesson15.big01.controller.EventListener;
+import com.javarush.test.level34.lesson15.big01.model.*;
 import com.javarush.test.level34.lesson15.big01.model.Box;
-import com.javarush.test.level34.lesson15.big01.model.Home;
-import com.javarush.test.level34.lesson15.big01.model.Player;
-import com.javarush.test.level34.lesson15.big01.model.Wall;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,15 +18,21 @@ public class Field extends JPanel {
         this.view = view;
     }
 
-    public void paint(Graphics g) {
-        Box box = new Box(50, 50);
-        box.draw(g);
-        Player player = new Player(100, 100);
-        player.draw(g);
-        Home home = new Home(100, 100);
-        home.draw(g);
-        Wall wall = new Wall(150, 100);
-        wall.draw(g);
+    public void paint(Graphics graphics) {
+//        Box box = new Box(50, 50);
+//        box.draw(graphics);
+//        Player player = new Player(100, 100);
+//        player.draw(graphics);
+//        Home home = new Home(100, 100);
+//        home.draw(graphics);
+//        Wall wall = new Wall(150, 100);
+//        wall.draw(graphics);
+        graphics.setColor(Color.BLACK);
+        //graphics.drawRect(0, 0, getWidth(), getHeight());
+        graphics.fillRect(0, 0, getWidth(), getHeight());
+        for(GameObject gameObject : view.getGameObjects().getAll()) {
+            gameObject.draw(graphics);
+        }
     }
 
     public void setEventListener(EventListener eventListener) {
