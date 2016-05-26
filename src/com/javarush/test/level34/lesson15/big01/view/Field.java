@@ -4,6 +4,7 @@ package com.javarush.test.level34.lesson15.big01.view;
 import com.javarush.test.level34.lesson15.big01.model.Box;
 import com.javarush.test.level34.lesson15.big01.model.Home;
 import com.javarush.test.level34.lesson15.big01.model.Player;
+import com.javarush.test.level34.lesson15.big01.model.Wall;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,5 +25,7 @@ public class Field extends JPanel {
         player.draw(g);
         Home home = new Home(100, 100);
         home.draw(g);
+        Wall wall = new Wall(150, 100);
+        wall.draw(g);
     }
 }
