@@ -33,4 +33,8 @@ public class Model {
         restart();
     }
 
+    public void move(Direction direction) {
+
+    }
+
 }
