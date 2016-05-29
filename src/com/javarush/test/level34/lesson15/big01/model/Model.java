@@ -78,7 +78,7 @@ public class Model {
 
     public boolean checkBoxCollision(Direction direction) {
         //передвижение игрока на домик
-        if (checkCollisionWithObjects(gameObjects.getPlayer(), direction, gameObjects.getHomes())) return false;
+        //if (checkCollisionWithObjects(gameObjects.getPlayer(), direction, gameObjects.getHomes())) return false;
         //передвижение игрока на ящик. если нашли, получили ящик
         Box targetBox = getCollidedBox(gameObjects.getPlayer(), direction);
         //если не нашли, то нету столкновения;

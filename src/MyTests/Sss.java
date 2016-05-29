@@ -11,9 +11,6 @@ import java.util.List;
  */
 public class Sss {
     public static void main(String[] args) throws IOException {
-        FileInputStream fileInputStream = new FileInputStream("src/DO NOT READ.txt");
-        byte[] bytes = new byte[fileInputStream.available()];
-        fileInputStream.read(bytes);
-        System.out.println(new String(bytes));
+        System.out.println(60 % 60);
     }
 }
