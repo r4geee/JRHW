@@ -76,22 +76,6 @@ public class LevelLoader {
                 }
             }
         }
-        //////////////////////
-//        Player player = new Player(Model.FIELD_SELL_SIZE / 2 * 3, Model.FIELD_SELL_SIZE / 2 * 2);
-//
-//        Home home = new Home(Model.FIELD_SELL_SIZE / 2 * 3, Model.FIELD_SELL_SIZE / 2 * 3);
-//
-//        homeSet.add(home);
-//
-//        Box box = new Box(Model.FIELD_SELL_SIZE / 2 * 3, Model.FIELD_SELL_SIZE / 2 * 4);
-//        boxSet.add(box);
-//
-//        Wall wall1 = new Wall(Model.FIELD_SELL_SIZE / 2 * 3, Model.FIELD_SELL_SIZE / 2 * 5);
-//        Wall wall2 = new Wall(Model.FIELD_SELL_SIZE / 2 * 3, Model.FIELD_SELL_SIZE / 2 * 6);
-//
-//        wallSet.add(wall1);
-//        wallSet.add(wall2);
-
         return new GameObjects(wallSet, boxSet, homeSet, player);
     }
 }
